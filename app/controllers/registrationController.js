@@ -4,7 +4,6 @@ app.controller('registrationController',
 			
 			$scope.register = function(){
 				//Depending on the type of account, we delegate to the relevant register function.
-				console.log($scope.user.type);
 				if($scope.user.type == "publisher") {
 					$authService.registerPublisher($scope.user);
 				} else {

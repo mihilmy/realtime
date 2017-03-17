@@ -1,5 +1,5 @@
 app.factory('$authService', 
-		['$rootScope', '$location','$firebaseAuth', function($rootScope, $firebaseAuth){
+		['$rootScope', '$location','$firebaseAuth', function($rootScope, $location,$firebaseAuth){
 			var db = firebase.database().ref();
 			var auth = $firebaseAuth();
 			
