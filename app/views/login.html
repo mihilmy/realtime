@@ -1,0 +1,37 @@
+<div class="header">
+		<div class="container">
+				<div class="row">
+						<h1 class="col-md-offset-1">Log in</h1>
+				</div>
+		</div>
+</div>
+<p>{{message}}</p>
+
+<form class="form-horizontal" ng-submit="login()" novalidate>
+		<div class="form-group">
+		<label class="col-md-2 control-label">Email: </label>
+		<div class="col-md-4">
+			<input type="email" class="form-control" placeholder="Email" name="email" ng-model="user.email" ng-required="true">
+		</div>
+		</div>
+		<div class="form-group">
+		<label class="col-md-2 control-label">Password: </label>
+		<div class="col-md-4">
+			<input type="password" class="form-control" placeholder="Password" name="password" ng-model="user.password" ng-required="true">
+		</div>
+		</div>
+		<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" name="remember_me"> Remember me
+				</label>
+			</div>
+		</div>
+		</div>
+		<div class="form-group">
+		<div class="col-md-offset-2 col-md-10">
+			<button type="submit" class="btn btn-primary">Log in</button>
+		</div>
+		</div>
+</form>

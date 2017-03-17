@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="realtime">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Realtime</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="css/style.css">
+    <!--AngularJS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.3/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.3/angular-animate.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+		
+		<script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
+		<script>
+			// Initialize Firebase
+			var config = {
+				apiKey: "AIzaSyBPIoO45ynjGB8lrdRB9isA2VhGoYhZbSQ",
+				authDomain: "realtime-1608c.firebaseapp.com",
+				databaseURL: "https://realtime-1608c.firebaseio.com",
+				storageBucket: "realtime-1608c.appspot.com",
+				messagingSenderId: "665645577643"
+			};
+			firebase.initializeApp(config);
+		</script>
+		<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+		<!--APP SCRIPTS-->
+    <script src="/app.js"></script>
+    <script src="controllers/registrationController.js"></script>
+    <script src="controllers/authenticationController.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+		
+		<nav ng-include="'views/nav.html'"></nav>
+		
+		<div class="margin" ng-view></div>
+		
+	</body>
+	<!--JQuery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<!--Bootstrap JS-->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  
+</html>
