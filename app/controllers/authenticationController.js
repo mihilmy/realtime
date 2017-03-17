@@ -1,33 +1,45 @@
 app.factory('$authService', 
-		['$rootScope', '$firebaseAuth', function($rootScope, $firebaseAuth){
+		['$rootScope', '$location','$firebaseAuth', function($rootScope, $firebaseAuth){
 			var db = firebase.database().ref();
 			var auth = $firebaseAuth();
 			
 			return {
 				login: function(user) {
-					$rootScope.message = "Hey!"
+					auth.$signInWithEmailAndPassword(user.email,user.password).
+					then(function(user) {
+						$location.path('/success');
+					}).catch(function(error) {
+						$rootScope.message = error.message;
+					});
 				},
-				registerPublisher: function(user) {
-					auth.$createUserWithEmailAndPassword(user.email, user.password).then(function(regPub){
-						console.log({
+				registerReader: function(user) {
+					auth.$createUserWithEmailAndPassword(user.email, user.password).then(function(regReader){
+						var readerRef = db.child('readers').child(regReader.uid).set({
 							firstName: user.firstName,
 							lastName: user.lastName,
 							address: user.address,
 							cellPhone: user.cellPhone,
 							email: user.email,
-							createdAt: firebase.database.ServerValue.TIMESTAMP,
+							createdAt: firebase.database.ServerValue.TIMESTAMP
 						});
+					}).catch(function(error){
+						$rootScope.message = error.message;
+					});
+				},
+				registerPublisher: function(user) {
+					auth.$createUserWithEmailAndPassword(user.email, user.password).then(function(regPub){
 						var publisherRef = db.child('publishers').child(regPub.uid).set({
 							firstName: user.firstName,
 							lastName: user.lastName,
 							address: user.address,
 							cellPhone: user.cellPhone,
 							email: user.email,
-							createdAt: firebase.database.ServerValue.TIMESTAMP,
+							verified: false,
+							createdAt: firebase.database.ServerValue.TIMESTAMP
 						});
 					}).catch(function(error){
 						$rootScope.message = error.message;
-					})
+					});
 				}
 			}
 	

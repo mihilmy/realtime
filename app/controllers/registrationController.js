@@ -3,8 +3,14 @@ app.controller('registrationController',
 		function($scope, $authService) {
 			
 			$scope.register = function(){
-				//Check if he was a publisher or reader.
-				$authService.registerPublisher($scope.user);
+				//Depending on the type of account, we delegate to the relevant register function.
+				console.log($scope.user.type);
+				if($scope.user.type == "publisher") {
+					$authService.registerPublisher($scope.user);
+				} else {
+					$authService.registerReader($scope.user);
+				}
+				
 			}
 
 }]);
