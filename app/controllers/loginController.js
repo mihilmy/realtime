@@ -5,4 +5,8 @@ app.controller('loginController',
 			$scope.login = function() {
 				$authService.login($scope.user);
 			}
+			
+			$scope.logout =  function() {
+				$authService.logout();
+			}
 }]);
