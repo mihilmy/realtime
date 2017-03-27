@@ -11,6 +11,10 @@ app.run(['$rootScope', '$location', function($rootScope, $location) {
 
 app.config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
+	when('/new', {
+		templateUrl: 'views/posts/new.html',
+		controller: 'postsController'
+	}).
 	when('/login', {
 		templateUrl: 'views/login.html',
 		controller: 'loginController'
@@ -19,8 +23,9 @@ app.config(['$routeProvider', function($routeProvider) {
 		templateUrl: 'views/register.html',
 		controller: 'registrationController'
 	}).
-	when('/success', {
-		templateUrl: 'views/success.html',
+	when('/', {
+		templateUrl: 'views/posts/index.html',
+		controller: 'postsController',
 		resolve: {
 			currentAuth: function($authService){
 				return $authService.requireAuth();

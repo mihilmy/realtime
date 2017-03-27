@@ -19,7 +19,7 @@ app.factory('$authService',
 				login: function(user) {
 					auth.$signInWithEmailAndPassword(user.email,user.password).
 					then(function(user) {
-						$location.path('/success');
+						$location.path('/');
 					}).catch(function(error) {
 						$rootScope.message = error.message;
 					});
@@ -41,6 +41,7 @@ app.factory('$authService',
 							address: user.address,
 							cellPhone: user.cellPhone,
 							email: user.email,
+							id: regReader.uid,
 							createdAt: firebase.database.ServerValue.TIMESTAMP
 						});
 						
@@ -59,6 +60,8 @@ app.factory('$authService',
 							cellPhone: user.cellPhone,
 							email: user.email,
 							verified: false,
+							subsription: false,
+							id: regPub.uid,
 							createdAt: firebase.database.ServerValue.TIMESTAMP
 						});
 						funcs.login(user);

@@ -1,0 +1,47 @@
+<div class="container">
+	<div class="row">
+		<form class="form-group margin" ng-submit="create()" novalidate>
+			<input type="text" class="form-control" placeholder="Title" ng-required="true" ng-model = "post.title">
+			<br>
+			<input type="text" class="form-control" placeholder="Summary" ng-required="true" ng-model = "post.summary">
+			<br>
+			<input type="text" class="form-control" placeholder="Category" ng-required="true" ng-model = "post.category">
+			<br>
+			<input type="text" class="form-control" placeholder="Location" ng-required="true" ng-model = "post.location">
+			<br>
+			<input type="text" class="form-control" placeholder="Start Time" ng-required="true" ng-model = "post.start">
+			<br>
+			<input type="text" class="form-control" placeholder="End Time" ng-required="true" ng-model = "post.end">
+			<br>
+			<button type="button" class="btn btn-default">
+  			<span class="glyphicon glyphicon-bold" aria-hidden="true"></span>
+			</button>
+			<button type="button" class="btn btn-default">
+  			<span class="glyphicon glyphicon-italic" aria-hidden="true"></span>
+			</button>
+			&nbsp;
+			<button type="button" class="btn btn-default">
+  			<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+			</button>
+ 			<button type="button" class="btn btn-default">
+  			<span class="glyphicon glyphicon-align-right" aria-hidden="true"></span>
+			</button>
+ 			<button type="button" class="btn btn-default">
+  			<span class="glyphicon glyphicon-align-center" aria-hidden="true"></span>
+			</button>
+ 			<button type="button" class="btn btn-default">
+  			<span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+			</button>
+			&nbsp;
+ 			<button type="button" class="btn btn-default">
+  			<span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+			</button>
+			
+			<br>
+			<br>
+			<textarea class="form-control" rows="20" ng-required="true" ng-model="post.content"></textarea>
+			<br>
+			<input type="submit" class="btn btn-success">
+		</form>
+	</div>
+</div>

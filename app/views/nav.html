@@ -16,7 +16,8 @@
 			<ul class="nav navbar-nav navbar-right">
 					<li><a ng-hide="currentUser" ng-href="#!/register">Register</a></li>
 					<li><a ng-hide="currentUser" ng-href="#!/login">Login</a></li>
-					<li><a ng-show="currentUser" ng-controller="loginController" href="#!/login" ng-click="logout()">Logout</a></li>
+					<li><a ng-show="currentUser" ng-controller="postsController" ng-href="#!/new">Publish</a></li>
+					<li><a ng-show="currentUser" ng-controller="loginController" ng-href="#!/login" ng-click="logout()">Logout</a></li>
 			</ul>
 	</div>
  </div>
