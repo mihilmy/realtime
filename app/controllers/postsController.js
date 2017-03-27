@@ -1,4 +1,4 @@
-app.controller('postsController', ['$scope','$rootScope', '$location', '$firebaseArray',function($scope, $rootScope, $location, $firebaseArray) {
+app.controller('postsController', ['$scope','$rootScope','$routeParams','$location','$firebaseObject' ,'$firebaseArray',function($scope, $rootScope,$routeParms, $location, $firebaseObject, $firebaseArray) {
 	var db = firebase.database().ref();
 	
 	$scope.create = function() {
@@ -22,14 +22,22 @@ app.controller('postsController', ['$scope','$rootScope', '$location', '$firebas
 	}
 	
 	$scope.index = function() {
-		console.log(1);
 		var postsRef = db.child('posts');
 		var posts = $firebaseArray(postsRef);
 		$scope.posts = posts;
 	}
 	
 	
-	
+	$scope.show = function() {
+		var postRef = db.child('posts').child($routeParms.id);
+		var postObj = $firebaseObject(postRef);
+		postObj.$loaded().then(function() {
+			var authorRef = db.child('publishers').child(postObj.pid);
+			var authorObj = $firebaseObject(authorRef);
+			$scope.author = authorObj;
+		});
+		$scope.post = postObj;
+	}
 	
 	
 }]);
