@@ -1,0 +1,2 @@
+Questions about the backend:
+1. When retrieveing the posts for a specific user. Is there a better way the getting all the posts and filtering out the posts that correspond to a specific publisher?

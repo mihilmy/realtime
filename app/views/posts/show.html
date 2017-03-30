@@ -1,7 +1,14 @@
 	<div class="container" data-ng-init="show()">
 		<div class="row">
-			<h1>{{post.title}}</h1>
-			<h6>by <a href="">{{author.firstName}} {{author.lastName}}</a></h6>
-			<p>{{post.content}}</p>
+			<div class="col-md-10">
+				<h1>{{post.title}}</h1>
+				<h5>by <a href="#!/users/{{author.id}}">{{author.firstName}} {{author.lastName}}</a></h5>
+			</div>
+			
+			<div ng-show={{owner}} class="col-md-offset-8 col-md-1">
+				<button class="btn btn-danger delete-button" ng-click="delete(post.id)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+			</div>
 		</div>
+		
+		<p>{{post.content}}</p>
 	</div>

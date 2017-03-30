@@ -15,6 +15,10 @@ app.config(['$routeProvider', function($routeProvider) {
 		templateUrl: 'views/posts/new.html',
 		controller: 'postsController'
 	}).
+	when('/users/:id', {
+		templateUrl: 'views/users/show.html',
+		controller: 'usersController'
+	}).
 	when('/posts/:id', {
 		templateUrl: 'views/posts/show.html',
 		controller: 'postsController'

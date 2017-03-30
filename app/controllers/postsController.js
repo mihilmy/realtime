@@ -1,8 +1,8 @@
 app.controller('postsController', ['$scope','$rootScope','$routeParams','$location','$firebaseObject' ,'$firebaseArray',function($scope, $rootScope,$routeParms, $location, $firebaseObject, $firebaseArray) {
 	var db = firebase.database().ref();
+	var postsRef = db.child('posts');
 	
 	$scope.create = function() {
-		var postsRef = db.child('posts');
 		//Create the post id.
 		var postId = postsRef.push().key;
 		//Add the content of the post in the database.
@@ -22,22 +22,25 @@ app.controller('postsController', ['$scope','$rootScope','$routeParams','$locati
 	}
 	
 	$scope.index = function() {
-		var postsRef = db.child('posts');
 		var posts = $firebaseArray(postsRef);
 		$scope.posts = posts;
 	}
 	
-	
 	$scope.show = function() {
-		var postRef = db.child('posts').child($routeParms.id);
+		var postRef = postsRef.child($routeParms.id);
 		var postObj = $firebaseObject(postRef);
 		postObj.$loaded().then(function() {
 			var authorRef = db.child('publishers').child(postObj.pid);
 			var authorObj = $firebaseObject(authorRef);
+			$scope.owner = authorObj.id == $rootScope.currentUser.id
 			$scope.author = authorObj;
 		});
 		$scope.post = postObj;
 	}
 	
+	$scope.delete = function(key) {
+		postsRef.child(key).remove();
+		$location.path('/');
+	}
 	
 }]);

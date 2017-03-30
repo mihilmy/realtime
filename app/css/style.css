@@ -1,7 +1,18 @@
+.navbar{
+	background-color: lightblue;
+}
 .nav-adjust {
 	margin-top: 50px;
 }
 
 .fav-button {
 	margin-top: 20px;
+}
+
+.user-icon {
+	font-size: 200px;
+}
+
+.delete-button {
+	margin-top: 30px;
 }
