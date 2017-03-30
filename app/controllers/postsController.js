@@ -32,9 +32,10 @@ app.controller('postsController', ['$scope','$rootScope','$routeParams','$locati
 		postObj.$loaded().then(function() {
 			var authorRef = db.child('publishers').child(postObj.pid);
 			var authorObj = $firebaseObject(authorRef);
-			$scope.owner = authorObj.id == $rootScope.currentUser.id
 			$scope.author = authorObj;
+			$scope.isOwner = $rootScope.currentUser.id == postObj.pid;
 		});
+
 		$scope.post = postObj;
 	}
 	
