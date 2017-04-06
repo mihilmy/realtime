@@ -6,15 +6,16 @@ app.controller('postsController', ['$scope','$rootScope','$routeParams','$locati
 		//Create the post id.
 		var postId = postsRef.push().key;
 		//Add the content of the post in the database.
+		console.log($scope.post.end);
 		postsRef.child(postId).set({
 			id: postId,
 			pid: $rootScope.currentUser.id,
 			title: $scope.post.title,
 			summary: $scope.post.summary,
 			category: $scope.post.category,
-			location: $scope.post.location,
-			start: $scope.post.start,
-			end: $scope.post.end,
+			location: $scope.post.location.formatted_address,
+			start: $scope.post.start.toString(),
+			end: $scope.post.end.toString(),
 			createdAt: firebase.database.ServerValue.TIMESTAMP,
 			content: $scope.post.content
 		});
@@ -30,7 +31,7 @@ app.controller('postsController', ['$scope','$rootScope','$routeParams','$locati
 		var postRef = postsRef.child($routeParms.id);
 		var postObj = $firebaseObject(postRef);
 		postObj.$loaded().then(function() {
-			var authorRef = db.child('publishers').child(postObj.pid);
+			var authorRef = db.child('users').child(postObj.pid);
 			var authorObj = $firebaseObject(authorRef);
 			$scope.author = authorObj;
 			$scope.isOwner = $rootScope.currentUser.id == postObj.pid;
@@ -43,5 +44,49 @@ app.controller('postsController', ['$scope','$rootScope','$routeParams','$locati
 		postsRef.child(key).remove();
 		$location.path('/');
 	}
+	/*
+	@params
+	postID: The post id you want to favorite.
 	
+	@return
+	Gets a reference to the users current favorites and then uses a transaction to update the data there.
+	The transaction function checks the data currently there if there is no data then it's null.
+	If there is we abort the transaction by return whcih delegates to another method to remove.
+	*/
+	$scope.favorite = function(postID) {
+		var likesRef = db.child('favorites').child($rootScope.currentUser.id);
+		
+		likesRef.child(postID).transaction(function(currentData) {
+			if (currentData === null) {
+				console.log('Fav');
+				return true;
+			} else {
+				console.log('Unfav');
+				return;
+			}
+		}, function(error, committed, snapshot) {
+			if (error) {
+				console.log('Transaction failed abnormally!', error);
+			} else if (!committed) {
+				likesRef.child(postID).remove();
+			} else {
+				console.log('Like added!');
+			}
+		});
+	}
+	/*
+	@params
+	postID: The post id you want to favorite.
+	
+	@return
+	Gets a reference to the users current favorites and then uses a transaction to
+	check if the current post is favorited by the user or not.
+	*/
+	$scope.isFavorite = function(postID) {
+		
+		var favRef = db.child('favorites').child($rootScope.currentUser.id).child(postID);
+		var fav = $firebaseObject(favRef);
+	}
+	
+		
 }]);

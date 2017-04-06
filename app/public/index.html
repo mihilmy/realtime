@@ -16,8 +16,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.3/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.3/angular-animate.min.js"></script>
+		<!--Firebase-->
     <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
-		
 		<script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
 		<script>
 			// Initialize Firebase
@@ -38,7 +38,10 @@
     <script src="controllers/usersController.js"></script>
     <script src="controllers/loginController.js"></script>
     <script src="controllers/postsController.js"></script>
-
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBf5VIHx70D3MePcQRbSAHIPG0hlq-BEU&libraries=places"></script>
+		<script src="../controllers/autocomplete.js"></script>
+   
+   <link rel="stylesheet" href="../css/autocomplete.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -53,6 +56,7 @@
 		<div class="nav-adjust" ng-view></div>
 		
 	</body>
+	
 	<!--JQuery-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<!--Bootstrap JS-->

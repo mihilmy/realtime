@@ -5,7 +5,7 @@
 			<a ng-href="#!/posts/{{post.id}}"><h3>{{post.title}}</h3></a>
 		</div>
 		<div class="col-sm-1">
-			<button class="btn btn-default glyphicon glyphicon-star fav-button"></button>
+			<button class="btn btn-default glyphicon glyphicon-star-empty fav-button" ng-click="favorite(post.id)"></button>
 		</div>
 		<div class="col-sm-12">
 			<p>{{post.summary}}</p>

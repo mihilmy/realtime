@@ -16,3 +16,7 @@
 .delete-button {
 	margin-top: 30px;
 }
+
+.capitalize {
+   text-transform: capitalize;
+}

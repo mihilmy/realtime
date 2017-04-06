@@ -7,11 +7,21 @@ app.factory('$authService',
 			//On the authorization state changes
 			auth.$onAuthStateChanged(function(user) {
 				if(user) {
-					var userRef = db.child('publishers').child(user.uid);
+					var userRef = db.child('users').child(user.uid);
 					var userObj = $firebaseObject(userRef);
-					$rootScope.currentUser = userObj;
+					userObj.$loaded().then(function() {
+						if(userObj.type == "reader"){
+							$rootScope.restricted = true;
+						} else {
+							$rootScope.restricted = false;
+						}
+						$rootScope.currentUser = userObj;
+					});
+					
+					
 				} else {
 					$rootScope.currentUser = null;
+					$rootScope.restricted = null;
 				}
 			});
 			
@@ -35,12 +45,15 @@ app.factory('$authService',
 				
 				registerReader: function(user) {
 					auth.$createUserWithEmailAndPassword(user.email, user.password).then(function(regReader){
-						var readerRef = db.child('readers').child(regReader.uid).set({
+						var readerRef = db.child('users').child(regReader.uid).set({
 							firstName: user.firstName,
 							lastName: user.lastName,
 							address: user.address,
 							cellPhone: user.cellPhone,
 							email: user.email,
+							verified: false,
+							subsription: false,
+							type: "reader",
 							id: regReader.uid,
 							createdAt: firebase.database.ServerValue.TIMESTAMP
 						});
@@ -53,7 +66,7 @@ app.factory('$authService',
 				
 				registerPublisher: function(user) {
 					auth.$createUserWithEmailAndPassword(user.email, user.password).then(function(regPub){
-						var publisherRef = db.child('publishers').child(regPub.uid).set({
+						var publisherRef = db.child('users').child(regPub.uid).set({
 							firstName: user.firstName,
 							lastName: user.lastName,
 							address: user.address,
@@ -61,6 +74,7 @@ app.factory('$authService',
 							email: user.email,
 							verified: false,
 							subsription: false,
+							type: "publisher",
 							id: regPub.uid,
 							createdAt: firebase.database.ServerValue.TIMESTAMP
 						});

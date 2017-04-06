@@ -1,4 +1,4 @@
-var app = angular.module("realtime", ['ngRoute','firebase']);
+var app = angular.module("realtime", ['ngRoute','firebase','google.places']);
 
 app.run(['$rootScope', '$location', function($rootScope, $location) {
 	$rootScope.$on('$routeChangeError', function(event,next,previous, error){

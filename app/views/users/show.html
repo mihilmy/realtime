@@ -1,33 +1,55 @@
 <div class="container">
 
 	<div class="row nav-adjust">
-		<div class="col-md-offset-2 col-md-3">
+		<div class="col-md-3">
 			<i class="fa fa-user user-icon" aria-hidden="true"></i>
 		</div>
 		<div class="col-md-6" data-ng-init="show()">
-			<h1>{{author.firstName}} {{author.lastName}}</h1>
-			<h4>Publisher</h4>
+			<h1>{{user.firstName}} {{user.lastName}}</h1>
+			<h4 class="capitalize">{{user.type}}</h4>
+		</div>
+		<div class="col-md-offset-2 col-md-1">
+			<button class="btn btn-primary" ng-click="subscribe()" ng-hide="isSelf()">Subscribe</button>
 		</div>
 	</div>
-	
-	<h2 class="col-md-offset-2">Posts</h2>
-	
-	<div data-ng-init="posts()">
+
+	<div ng-hide="restricted" data-ng-init="publisherPosts()">
+	<h2>Posts</h2>
 		<div ng-repeat="(key,post) in publishedPosts">
 			<div class="row">
-				<div class="col-md-offset-2 col-md-3">
+				<div class="col-md-6">
 					<a href="#!/posts/{{post.id}}"><h4>{{post.title}}</h4></a>
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="col-md-offset-2 col-md-6">
+				<div class="col-md-6">
 					<p>{{post.summary}}</p>
 				</div>
 			</div>
 
-			<hr class="col-md-offset-2 col-md-10">
+			<hr class="col-md-12">
 		</div>
-	</div>	
+	</div>
+
+	<div data-ng-init="favorites()">
+	<h2>Favorites</h2>
+		<div ng-repeat="(key,post) in favPosts">
 			
+			<div class="row">
+				<div class="col-md-6">
+					<a href="#!/posts/{{post.id}}"><h4>{{post.title}}</h4></a>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-6">
+					<p>{{post.summary}}</p>
+				</div>
+			</div>
+
+			<hr class="col-md-12">
+		</div>
+	</div>
+	
 </div>

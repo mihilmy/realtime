@@ -7,11 +7,11 @@
 			<br>
 			<input type="text" class="form-control" placeholder="Category" ng-required="true" ng-model = "post.category">
 			<br>
-			<input type="text" class="form-control" placeholder="Location" ng-required="true" ng-model = "post.location">
+			<input type="text" g-places-autocomplete class="form-control" placeholder="Location" ng-required="true" ng-model = "post.location">
 			<br>
-			<input type="text" class="form-control" placeholder="Start Time" ng-required="true" ng-model = "post.start">
+			<input type="datetime-local" class="form-control" placeholder="Start Time" ng-required="true" ng-model = "post.start">
 			<br>
-			<input type="text" class="form-control" placeholder="End Time" ng-required="true" ng-model = "post.end">
+			<input type="datetime-local" class="form-control" placeholder="End Time" ng-required="true" ng-model = "post.end">
 			<br>
 			<button type="button" class="btn btn-default">
   			<span class="glyphicon glyphicon-bold" aria-hidden="true"></span>
