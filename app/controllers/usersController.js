@@ -69,6 +69,4 @@ app.controller('usersController', ['$scope', '$rootScope', '$routeParams', '$fir
 		
 	}
 	
-
-	
 }]);

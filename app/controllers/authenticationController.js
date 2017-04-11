@@ -6,7 +6,8 @@ app.factory('$authService',
 			var funcs;
 			//On the authorization state changes
 			auth.$onAuthStateChanged(function(user) {
-				if(user) {
+
+				if(user && user.emailVerified) {
 					var userRef = db.child('users').child(user.uid);
 					var userObj = $firebaseObject(userRef);
 					userObj.$loaded().then(function() {
@@ -19,6 +20,8 @@ app.factory('$authService',
 					});
 					
 					
+				} else if(user && !user.emailVerified) {
+					$rootScope.message = "You must verify your email address. Please check your inbox, we're waiting for you.";
 				} else {
 					$rootScope.currentUser = null;
 					$rootScope.restricted = null;
@@ -28,8 +31,13 @@ app.factory('$authService',
 			funcs = {
 				login: function(user) {
 					auth.$signInWithEmailAndPassword(user.email,user.password).
-					then(function(user) {
-						$location.path('/');
+					then(function(regUser) {
+						if(regUser.emailVerified) {
+							$location.path('/');	
+						} else {
+							$location.path('/login');	
+						}
+						
 					}).catch(function(error) {
 						$rootScope.message = error.message;
 					});
@@ -51,17 +59,20 @@ app.factory('$authService',
 							address: user.address,
 							cellPhone: user.cellPhone,
 							email: user.email,
-							verified: false,
 							subsription: false,
 							type: "reader",
 							id: regReader.uid,
 							createdAt: firebase.database.ServerValue.TIMESTAMP
+						}).then(function() {
+							regReader.sendEmailVerification().then(function() {
+								funcs.login(user);
+							});
 						});
-						
-						funcs.login(user);
+
 					}).catch(function(error){
 						$rootScope.message = error.message;
 					});
+					
 				},
 				
 				registerPublisher: function(user) {
@@ -72,13 +83,15 @@ app.factory('$authService',
 							address: user.address,
 							cellPhone: user.cellPhone,
 							email: user.email,
-							verified: false,
 							subsription: false,
 							type: "publisher",
 							id: regPub.uid,
 							createdAt: firebase.database.ServerValue.TIMESTAMP
+						}).then(function() {
+							regPub.sendEmailVerification().then(function() {
+								funcs.login(user);
+							});
 						});
-						funcs.login(user);
 					}).catch(function(error){
 						$rootScope.message = error.message;
 					});

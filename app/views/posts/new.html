@@ -13,33 +13,8 @@
 			<br>
 			<input type="datetime-local" class="form-control" placeholder="End Time" ng-required="true" ng-model = "post.end">
 			<br>
-			<button type="button" class="btn btn-default">
-  			<span class="glyphicon glyphicon-bold" aria-hidden="true"></span>
-			</button>
-			<button type="button" class="btn btn-default">
-  			<span class="glyphicon glyphicon-italic" aria-hidden="true"></span>
-			</button>
-			&nbsp;
-			<button type="button" class="btn btn-default">
-  			<span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-			</button>
- 			<button type="button" class="btn btn-default">
-  			<span class="glyphicon glyphicon-align-right" aria-hidden="true"></span>
-			</button>
- 			<button type="button" class="btn btn-default">
-  			<span class="glyphicon glyphicon-align-center" aria-hidden="true"></span>
-			</button>
- 			<button type="button" class="btn btn-default">
-  			<span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
-			</button>
-			&nbsp;
- 			<button type="button" class="btn btn-default">
-  			<span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-			</button>
 			
-			<br>
-			<br>
-			<textarea class="form-control" rows="20" ng-required="true" ng-model="post.content"></textarea>
+			<trix-editor angular-trix ng-model="foo" class="trix-content"></trix-editor>
 			<br>
 			<input type="submit" class="btn btn-success">
 		</form>
