@@ -55,9 +55,9 @@ app.controller('usersController', ['$scope', '$rootScope', '$routeParams', '$fir
 		
 		var favsRef = db.child('favorites').child($routeParams.id).once('value').then( function (favs) {
 			for(var key in favs.val()) {
-				postsRef.child(key).once('value').then( function(post) {
-					postsArr.push(post.val());
-				});
+				var postRef = postsRef.child(key);
+				var postObj = $firebaseObject(postRef);
+				postsArr.push(postObj);
 			}
 		});
 		

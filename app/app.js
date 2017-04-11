@@ -2,7 +2,7 @@ var app = angular.module("realtime", ['ngRoute','firebase','google.places', 'ang
 
 app.run(['$rootScope', '$location', function($rootScope, $location) {
 	$rootScope.$on('$routeChangeError', function(event,next,previous, error){
-		if (error == 'AUTH_REQUIRED') {
+		if (error === 'AUTH_REQUIRED') {
 			$rootScope.message = "Sorry you must be logged in";
 			$location.path('/login');
 		} 

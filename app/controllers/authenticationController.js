@@ -6,7 +6,6 @@ app.factory('$authService',
 			var funcs;
 			//On the authorization state changes
 			auth.$onAuthStateChanged(function(user) {
-
 				if(user && user.emailVerified) {
 					var userRef = db.child('users').child(user.uid);
 					var userObj = $firebaseObject(userRef);
