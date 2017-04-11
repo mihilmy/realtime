@@ -1,22 +1,24 @@
 <div class="container">
 	<div class="row">
-		<form class="form-group nav-adjust" ng-submit="create()" novalidate>
-			<input type="text" class="form-control" placeholder="Title" ng-required="true" ng-model = "post.title">
+		<p>{{postsError}}</p>
+		<form class="form-group nav-adjust" ng-submit="create()">
+			<input type="text" class="form-control" placeholder="Title" ng-model = "post.title" required>
 			<br>
-			<input type="text" class="form-control" placeholder="Summary" ng-required="true" ng-model = "post.summary">
+			<input type="text" class="form-control" placeholder="Summary" ng-model = "post.summary" required>
 			<br>
-			<input type="text" class="form-control" placeholder="Category" ng-required="true" ng-model = "post.category">
+			<input type="text" class="form-control" placeholder="Category" ng-model = "post.category" required>
 			<br>
-			<input type="text" g-places-autocomplete class="form-control" placeholder="Location" ng-required="true" ng-model = "post.location">
+			<input type="text" g-places-autocomplete class="form-control" placeholder="Location" ng-model = "post.location" required>
 			<br>
-			<input type="datetime-local" class="form-control" placeholder="Start Time" ng-required="true" ng-model = "post.start">
+			<input type="datetime-local" class="form-control" placeholder="Start Time" ng-model = "post.start" required>
 			<br>
-			<input type="datetime-local" class="form-control" placeholder="End Time" ng-required="true" ng-model = "post.end">
+			<input type="datetime-local" class="form-control" placeholder="End Time" ng-model = "post.end" required>
 			<br>
 			
-			<trix-editor angular-trix ng-model="foo" class="trix-content"></trix-editor>
+			<trix-editor angular-trix ng-model="post.content" class="trix-content"></trix-editor>
 			<br>
 			<input type="submit" class="btn btn-success">
 		</form>
 	</div>
+
 </div>

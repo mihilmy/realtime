@@ -8,5 +8,5 @@
 				<button class="btn btn-danger delete-button" ng-click="delete(post.id)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 			</div>
 		</div>
-		<p>{{post.content}}</p>
+		<div ng-bind-html="post.content"></div>
 	</div>

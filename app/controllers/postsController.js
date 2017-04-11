@@ -3,10 +3,13 @@ app.controller('postsController', ['$scope','$rootScope','$routeParams','$locati
 	var postsRef = db.child('posts');
 	
 	$scope.create = function() {
+		if(!$scope.post.content) {
+			$rootScope.postsError = "Please add the post content";
+			return;
+		}
 		//Create the post id.
 		var postId = postsRef.push().key;
 		//Add the content of the post in the database.
-		console.log($scope.post.end);
 		postsRef.child(postId).set({
 			id: postId,
 			pid: $rootScope.currentUser.id,
@@ -19,6 +22,8 @@ app.controller('postsController', ['$scope','$rootScope','$routeParams','$locati
 			createdAt: firebase.database.ServerValue.TIMESTAMP,
 			content: $scope.post.content
 		});
+		
+		$rootScope.postsError = "";
 		$location.path('/');
 	}
 	
