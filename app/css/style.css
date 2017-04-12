@@ -1,6 +1,3 @@
-.navbar{
-	background-color: lightblue;
-}
 .nav-adjust {
 	margin-top: 50px;
 }
@@ -19,4 +16,19 @@
 
 .capitalize {
    text-transform: capitalize;
+}
+
+.navbar {
+    background-color: #3C5F92;
+    text-transform: uppercase;
+		font-weight: 300;
+}
+
+.navbar a {
+    color: #fff !important;
+}
+
+.navbar a:hover {
+  background-color: #fff !important;
+	color: black !important;	
 }
