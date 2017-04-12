@@ -1,24 +1,98 @@
 <div class="container">
-	<div class="row">
+	<div class="nav-adjust">	
+		
+		<form class="form-horizontal " ng-submit="create()">
 		<p>{{postsError}}</p>
-		<form class="form-group nav-adjust" ng-submit="create()">
-			<input type="text" class="form-control" placeholder="Title" ng-model = "post.title" required>
-			<br>
-			<input type="text" class="form-control" placeholder="Summary" ng-model = "post.summary" required>
-			<br>
-			<input type="text" class="form-control" placeholder="Category" ng-model = "post.category" required>
-			<br>
-			<input type="text" g-places-autocomplete class="form-control" placeholder="Location" ng-model = "post.location" required>
-			<br>
-			<input type="datetime-local" class="form-control" placeholder="Start Time" ng-model = "post.start" required>
-			<br>
-			<input type="datetime-local" class="form-control" placeholder="End Time" ng-model = "post.end" required>
-			<br>
+		<div class="form-group">
 			
-			<trix-editor angular-trix ng-model="post.content" class="trix-content"></trix-editor>
-			<br>
-			<input type="submit" class="btn btn-success">
+			<div class="col-sm-1">
+				<label class="control-label">Title:</label>
+			</div>
+			
+			<div class="col-sm-5">
+				<input type="text" class="form-control" placeholder="Title" ng-model = "post.title" required>
+			</div>
+		</div>
+
+		
+		<div class="form-group">
+			<div class="col-sm-1">
+				<label class="control-label">Summary:</label>
+			</div>
+			<div class="col-sm-5">
+				<input type="text" class="form-control" placeholder="Summary" ng-model = "post.summary" required>
+			</div>
+		</div>	
+
+			
+		<div class="form-group">
+		<div class="col-sm-1">
+				<label class="control-label">Category:</label>
+		</div>
+			<div class="col-sm-5">
+				<select class="form-control" ng-init="post.category='2'" ng-model="post.category">
+					<option value="0">Arts &amp; Humanities</option>
+					<option value="1">Beauty &amp; Style</option>
+					<option value="2">Business &amp; Finance</option>
+					<option value="3">Computers &amp; Internet</option>
+					<option value="4">Consumer Electronics</option>
+					<option value="5">Dining Out</option>
+					<option value="6">Education &amp; Reference</option>
+					<option value="7">Entertainment &amp; Music</option>
+					<option value="8">Environment</option>
+					<option value="9">Family &amp; Relationships</option>
+					<option value="10">Food &amp; Drink</option>
+					<option value="11">Games &amp; Recreation</option>
+					<option value="12">Health</option>
+					<option value="13">Home &amp; Garden</option>
+					<option value="14">Local Businesses</option>
+					<option value="15">News &amp; Events</option>
+					<option value="16">Pets</option>
+					<option value="17">Politics &amp; Government</option>
+					<option value="18">Pregnancy &amp; Parenting</option>
+					<option value="19">Science &amp; Mathematics</option>
+					<option value="20">Social Science</option>
+					<option value="21">Society &amp; Culture</option>
+					<option value="23">Sports</option>
+					<option value="24">Travel</option>
+					<option value="25">Products</option>
+				</select>
+			</div>
+		</div>			
+		
+		<div class="form-group">
+		<div class="col-sm-1">
+				<label class="control-label">Location:</label>
+		</div>
+			<div class="col-sm-5">
+				<input type="text" g-places-autocomplete class="form-control" placeholder="Location" ng-model = "post.location" required>
+			</div>
+		</div>			
+		
+		<div class="form-group">
+			<div class="col-sm-1">
+				<label class="control-label">Start:</label>
+			</div>
+			
+			<div class="col-sm-5">
+				<input type="date" class="form-control" ng-model = "post.start" required>
+			</div>
+		</div>			
+		
+		<div class="form-group">
+			<div class="col-sm-1">
+				<label class="control-label">End:</label>
+			</div>
+			<div class="col-sm-5">
+				<input type="date" class="form-control" ng-model = "post.end" required>
+			</div>
+		</div>
+
+			
+		<trix-editor angular-trix ng-model="post.content" class="trix-content"></trix-editor>
+		<br>
+		<input type="submit" class="btn btn-success">
+		
 		</form>
 	</div>
-
 </div>

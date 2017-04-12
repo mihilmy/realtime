@@ -2,6 +2,36 @@ app.controller('postsController', ['$scope','$rootScope','$routeParams','$locati
 	var db = firebase.database().ref();
 	var postsRef = db.child('posts');
 	
+	//This is a variable that includes all our current categories 
+	//and their index corresponds to what is stored on the database.
+	var categories = [ 
+ "Arts & Humanities",
+ "Beauty & Style",
+ "Business & Finance",
+ "Cars & Transportation",
+ "Computers & Internet",
+ "Consumer Electronics",
+ "Dining Out",
+ "Education & Reference",
+ "Entertainment & Music",
+ "Environment",
+ "Family & Relationships",
+ "Food & Drink",
+ "Games & Recreation",
+ "Health",
+ "Home & Garden",
+ "Local Businesses",
+ "News & Events",
+ "Pets",
+ "Politics & Government",
+ "Pregnancy & Parenting",
+ "Science & Mathematics",
+ "Social Science",
+ "Society & Culture",
+ "Sports",
+ "Travel",
+ "Yahoo Products"];
+	
 	$scope.create = function() {
 		if(!$scope.post.content) {
 			$rootScope.postsError = "Please add the post content";
@@ -15,7 +45,7 @@ app.controller('postsController', ['$scope','$rootScope','$routeParams','$locati
 			pid: $rootScope.currentUser.id,
 			title: $scope.post.title,
 			summary: $scope.post.summary,
-			category: $scope.post.category,
+			category: parseInt($scope.post.category),
 			location: $scope.post.location.formatted_address,
 			start: $scope.post.start.toString(),
 			end: $scope.post.end.toString(),
