@@ -1,7 +1,6 @@
 app.controller('postsController', ['$scope','$rootScope','$routeParams','$location','$firebaseObject' ,'$firebaseArray',function($scope, $rootScope,$routeParms, $location, $firebaseObject, $firebaseArray) {
 	var db = firebase.database().ref();
 	var postsRef = db.child('posts');
-	
 	//This is a variable that includes all our current categories 
 	//and their index corresponds to what is stored on the database.
 	var categories = [ 
@@ -31,6 +30,13 @@ app.controller('postsController', ['$scope','$rootScope','$routeParams','$locati
  "Sports",
  "Travel",
  "Yahoo Products"];
+	var date = new Date();
+	date.setSeconds(0,0);
+	var tmrw = new Date();
+	tmrw.setDate(tmrw.getDate() + 1);
+	tmrw.setSeconds(0,0);
+	
+	$scope.post = { start: date, end: tmrw}
 	
 	$scope.create = function() {
 		if(!$scope.post.content) {
