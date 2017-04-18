@@ -53,7 +53,7 @@ app.controller('postsController',
 		postsRef.child(postId).set({
 			id: postId,
 			pid: $rootScope.currentUser.id,
-			title: $scope.post.title.toLowerCase(),
+			title: $scope.post.title,
 			summary: $scope.post.summary,
 			category: parseInt($scope.post.category),
 			location: $scope.post.location.formatted_address,
@@ -134,7 +134,7 @@ app.controller('postsController',
 				var postObj = data.val();
 				var include = true;
 				//Title is defined but not equal to post.
-				if (title && postObj.title != title) {
+				if (title && postObj.title.toLowerCase() != title.toLowerCase()) {
 					include = false;
 				}
 				//Category is defined but not equal to post.
@@ -163,6 +163,7 @@ app.controller('postsController',
 		});
 		
 		$scope.posts = postsArray;
+		
 		console.log($scope.posts);
 	}
 	
