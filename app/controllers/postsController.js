@@ -94,41 +94,40 @@ app.controller('postsController',
 		$scope.modal.dismiss('dismiss');
 	}
 	
-	$scope.index = function() {
-		var posts = $firebaseArray(postsRef);
-		$scope.posts = posts;
-	}
-	
 	/*
 	@return
 	Temporary function to filter out posts on the index page after using the 
 	query object attained from the modal dialog.
 	*/
 	
-	$scope.search = function() {
+	$scope.index = function() {
 		//If empty query is supplied return everything.
 		var postsArray = [];
-		if (!$scope.query) {
 			//Order the posts by createdAt key such that newer posts are added to the top.
-			postsRef.orderByChild('createdAt').on('value', function(data) {
-				data.forEach(
-					function(data) {
-						postsArray.unshift(data.val());
-					}
-				);
-			});
+		postsRef.orderByChild('createdAt').on('value', function(data) {
+			data.forEach(
+				function(data) {
+					postsArray.unshift(data.val());
+				}
+			);
+		});
+		$scope.posts = postsArray;
+		return;
+
+		console.log($scope.posts);
+	}
+	
+	$scope.search = function() {
+		if ($scope.modal) {
 			$scope.modal.close('search');
-			console.log(postsArray);
-			return;
 		}
-		
+		var postsArray = [];
 		//Define our search variables
 		var title = $scope.query.title;
 		var category = $scope.query.category;
 		var location = $scope.query.location;
 		var start = $scope.query.start;
 		var end = $scope.query.end;
-		
 		
 		postsRef.on('value', function(data) {
 			data.forEach( function(data) {
@@ -163,11 +162,8 @@ app.controller('postsController',
 			
 		});
 		
-		$scope.modal.close('search');
-		
-		
-		console.log(postsArray);
-		
+		$scope.posts = postsArray;
+		console.log($scope.posts);
 	}
 	
 	$scope.show = function() {
