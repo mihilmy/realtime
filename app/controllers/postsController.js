@@ -1,6 +1,9 @@
-app.controller('postsController', ['$scope','$rootScope','$routeParams','$location','$firebaseObject' ,'$firebaseArray',function($scope, $rootScope,$routeParms, $location, $firebaseObject, $firebaseArray) {
+app.controller('postsController', 
+	['$scope','$rootScope','$routeParams','$location','$firebaseObject' ,'$firebaseArray', '$uibModal','$log',
+	 function($scope, $rootScope,$routeParms, $location, $firebaseObject, $firebaseArray, $uibModal, $log) {
 	var db = firebase.database().ref();
 	var postsRef = db.child('posts');
+
 	//This is a variable that includes all our current categories 
 	//and their index corresponds to what is stored on the database.
 	var categories = [ 
@@ -30,7 +33,8 @@ app.controller('postsController', ['$scope','$rootScope','$routeParams','$locati
  "Sports",
  "Travel",
  "Yahoo Products"];
-	var date = new Date();
+	
+  var date = new Date();
 	date.setSeconds(0,0);
 	var tmrw = new Date();
 	tmrw.setDate(tmrw.getDate() + 1);
@@ -49,7 +53,7 @@ app.controller('postsController', ['$scope','$rootScope','$routeParams','$locati
 		postsRef.child(postId).set({
 			id: postId,
 			pid: $rootScope.currentUser.id,
-			title: $scope.post.title,
+			title: $scope.post.title.toLowerCase(),
 			summary: $scope.post.summary,
 			category: parseInt($scope.post.category),
 			location: $scope.post.location.formatted_address,
@@ -63,9 +67,107 @@ app.controller('postsController', ['$scope','$rootScope','$routeParams','$locati
 		$location.path('/');
 	}
 	
+	
+	/*
+	@return
+	Uses the search tempelate to create a modal dialog to be used for users to search.
+	Nothing to be done by ng-route here.
+	A dependency called $uibModal was added in the function definition above.
+	*/
+	
+	$scope.openModal = function () {
+		
+    $scope.modal = $uibModal.open({
+      templateUrl: 'views/posts/search.html',
+      controller: 'postsController',
+			backdrop: true,
+			scope: $scope
+    });
+	
+	}
+	
+	/*
+	@return 
+	Closes the modal. Throws a possibly unhandeled rejection.
+	*/
+	$scope.closeModal = function () {
+		$scope.modal.dismiss('dismiss');
+	}
+	
 	$scope.index = function() {
 		var posts = $firebaseArray(postsRef);
 		$scope.posts = posts;
+	}
+	
+	/*
+	@return
+	Temporary function to filter out posts on the index page after using the 
+	query object attained from the modal dialog.
+	*/
+	
+	$scope.search = function() {
+		//If empty query is supplied return everything.
+		var postsArray = [];
+		if (!$scope.query) {
+			//Order the posts by createdAt key such that newer posts are added to the top.
+			postsRef.orderByChild('createdAt').on('value', function(data) {
+				data.forEach(
+					function(data) {
+						postsArray.unshift(data.val());
+					}
+				);
+			});
+			$scope.modal.close('search');
+			console.log(postsArray);
+			return;
+		}
+		
+		//Define our search variables
+		var title = $scope.query.title;
+		var category = $scope.query.category;
+		var location = $scope.query.location;
+		var start = $scope.query.start;
+		var end = $scope.query.end;
+		
+		
+		postsRef.on('value', function(data) {
+			data.forEach( function(data) {
+				var postObj = data.val();
+				var include = true;
+				//Title is defined but not equal to post.
+				if (title && postObj.title != title) {
+					include = false;
+				}
+				//Category is defined but not equal to post.
+				if (category && postObj.category != category) {
+					include = false;
+				}
+				//Location is defined but not equal to post.
+				if (location && postObj.location != location.formatted_address) {
+					include = false;
+				}
+				//Start date is defined but not equal to post.
+				if (start && postObj.start != start) {
+					include = false;
+				}
+				//End date is defined but not equal to post.
+				if (end && postObj.end != end) {
+					include = false;
+				}
+				//Include flag was not caught in any of the above cases which means that it should be added to postsArray
+				if (include) {
+					postsArray.push(postObj);
+				}
+				
+			});
+			
+		});
+		
+		$scope.modal.close('search');
+		
+		
+		console.log(postsArray);
+		
 	}
 	
 	$scope.show = function() {

@@ -4,7 +4,7 @@ var app = express();
 
 app.use(express.static('app/public'));
 app.use(express.static('app'));
-app.use('/scripts', express.static(__dirname + '/node_modules/angular-trix/dist/'));
+app.use('/scripts', express.static(__dirname + '/node_modules/'));
 //Select the port where you will  start serving requests.
 app.listen(3000, function () {
   console.log("Listening on port 3000");
