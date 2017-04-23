@@ -17,7 +17,7 @@
 					<li><a ng-hide="currentUser" ng-href="#!/register">Register</a></li>
 					<li><a ng-hide="currentUser" ng-href="#!/login">Login</a></li>
 					<li><a ng-show="!restricted && currentUser" ng-controller="postsController" ng-href="#!/new">Publish</a></li>
-					<li><a ng-show="currentUser" ng-href="#" ng-controller="postsController" ng-click="openModal()">Search</a></li>
+<!--					<li><a ng-show="currentUser" href="" ng-controller="postsController" ng-click="isCollapsed = !isCollapsed">Search</a></li>-->
 					<li><a ng-show="currentUser" ng-href="#!/users/{{currentUser.id}}">{{currentUser.firstName}}</a></li>
 					<li><a ng-show="currentUser" ng-controller="loginController" ng-href="#!/login" ng-click="logout()">Logout</a></li>
 			</ul>

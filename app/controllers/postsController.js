@@ -3,7 +3,7 @@ app.controller('postsController',
 	 function($scope, $rootScope,$routeParms, $location, $firebaseObject, $firebaseArray, $uibModal, $log) {
 	var db = firebase.database().ref();
 	var postsRef = db.child('posts');
-
+		
 	//This is a variable that includes all our current categories 
 	//and their index corresponds to what is stored on the database.
 	var categories = [ 
@@ -41,7 +41,8 @@ app.controller('postsController',
 	tmrw.setSeconds(0,0);
 	
 	$scope.post = { start: date, end: tmrw}
-	
+	$scope.isCollapsed = false;
+		 
 	$scope.create = function() {
 		if(!$scope.post.content) {
 			$rootScope.postsError = "Please add the post content";
@@ -111,10 +112,9 @@ app.controller('postsController',
 				}
 			);
 		});
-		$scope.posts = postsArray;
-		return;
-
-		console.log($scope.posts);
+		console.log(postsArray);
+		return postsArray;
+		
 	}
 	
 	$scope.search = function() {
@@ -162,9 +162,7 @@ app.controller('postsController',
 			
 		});
 		
-		$scope.posts = postsArray;
-		
-		console.log($scope.posts);
+		console.log(postsArray);
 	}
 	
 	$scope.show = function() {
