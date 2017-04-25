@@ -55,7 +55,7 @@ app.factory('$authService',
 						var readerRef = db.child('users').child(regReader.uid).set({
 							firstName: user.firstName,
 							lastName: user.lastName,
-							address: user.address,
+							address: user.address.formatted_address,
 							cellPhone: user.cellPhone,
 							email: user.email,
 							subsription: false,
@@ -66,6 +66,8 @@ app.factory('$authService',
 							regReader.sendEmailVerification().then(function() {
 								funcs.login(user);
 							});
+						}).catch(function(error) {
+							$rootScope.message = error.message;
 						});
 
 					}).catch(function(error){
@@ -79,7 +81,7 @@ app.factory('$authService',
 						var publisherRef = db.child('users').child(regPub.uid).set({
 							firstName: user.firstName,
 							lastName: user.lastName,
-							address: user.address,
+							address: user.address.formatted_address,
 							cellPhone: user.cellPhone,
 							email: user.email,
 							subsription: false,
@@ -90,7 +92,12 @@ app.factory('$authService',
 							regPub.sendEmailVerification().then(function() {
 								funcs.login(user);
 							});
+						})
+						.catch(function(error) {
+							$rootScope.message = error.message;
 						});
+						
+						
 					}).catch(function(error){
 						$rootScope.message = error.message;
 					});
