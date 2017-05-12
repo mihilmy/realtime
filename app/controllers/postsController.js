@@ -53,7 +53,7 @@ app.controller('postsController',
 		//Add the content of the post in the database.
 		postsRef.child(postId).set({
 			id: postId,
-			pid: $rootScope.currentUser.id,
+			pid: $rootScope.currentUser.$id,
 			title: $scope.post.title,
 			summary: $scope.post.summary,
 			category: parseInt($scope.post.category),
@@ -105,14 +105,15 @@ app.controller('postsController',
 		//If empty query is supplied return everything.
 		var postsArray = [];
 			//Order the posts by createdAt key such that newer posts are added to the top.
-		postsRef.orderByChild('createdAt').on('value', function(data) {
-			data.forEach(
-				function(data) {
-					postsArray.unshift(data.val());
+		postsRef.orderByChild('createdAt').on('value', function(dataSnapshot) {
+			dataSnapshot.forEach(
+				function(dataSnapshot) {
+					postsArray.unshift(dataSnapshot.val());
 				}
 			);
 		});
-		console.log(postsArray);
+		
+		console.log(postsArray);	
 		return postsArray;
 		
 	}
@@ -172,7 +173,7 @@ app.controller('postsController',
 			var authorRef = db.child('users').child(postObj.pid);
 			var authorObj = $firebaseObject(authorRef);
 			$scope.author = authorObj;
-			$scope.isOwner = $rootScope.currentUser.id == postObj.pid;
+			$scope.isOwner = $rootScope.currentUser.$id == postObj.pid;
 		});
 
 		$scope.post = postObj;
@@ -192,7 +193,7 @@ app.controller('postsController',
 	If there is we abort the transaction by return whcih delegates to another method to remove.
 	*/
 	$scope.favorite = function(postID) {
-		var likesRef = db.child('favorites').child($rootScope.currentUser.id);
+		var likesRef = db.child('favorites').child($rootScope.currentUser.$id);
 		
 		likesRef.child(postID).transaction(function(currentData) {
 			if (currentData === null) {
@@ -222,7 +223,7 @@ app.controller('postsController',
 	*/
 	$scope.isFavorite = function(postID) {
 		
-		var favRef = db.child('favorites').child($rootScope.currentUser.id).child(postID);
+		var favRef = db.child('favorites').child($rootScope.currentUser.$id).child(postID);
 		var fav = $firebaseObject(favRef);
 	}
 	

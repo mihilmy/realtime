@@ -21,11 +21,11 @@ app.controller('usersController', ['$scope', '$rootScope', '$routeParams', '$fir
 	}
 	
 	$scope.isSelf = function () {
-		return $routeParams.id == $rootScope.currentUser.id;
+		return $routeParams.id == $rootScope.currentUser.$id;
 	}
 	
 	$scope.subscribe = function() {
-		var userRef = db.child('subscriptions').child($rootScope.currentUser.id);
+		var userRef = db.child('subscriptions').child($rootScope.currentUser.$id);
 		
 		userRef.child($routeParams.id).transaction(function(currentData) {
 			if (currentData === null) {
