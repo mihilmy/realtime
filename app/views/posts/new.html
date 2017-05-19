@@ -87,7 +87,8 @@
 				<input type="datetime-local" class="form-control" ng-model = "post.end" required>
 			</div>
 		</div>
-		<p>Add images by drag/drop or by pasting into the editor.</p>
+		
+		<div class="alert alert-info" role="alert"><b>Heads Up! </b>Add images by drag/drop or by pasting into the editor.</div>
 		<trix-editor ng-model-options="{ updateOn: 'blur' }" spellcheck="true" class="trix-content" ng-model="post.content" angular-trix trix-initialize="trixInitialize(e, editor);" trix-change="trixChange(e, editor);" trix-selection-change="trixSelectionChange(e, editor);" trix-focus="trixFocus(e, editor);" trix-blur="trixBlur(e, editor);" trix-file-accept="trixFileAccept(e, editor);" trix-attachment-add="trixAttachmentAdd(e, editor);" trix-attachment-remove="trixAttachmentRemove(e, editor);" placeholder="Write something.."></trix-editor>
 <!--		<trix-editor angular-trix ng-model="post.content" class="trix-content"></trix-editor>-->
 		<br>

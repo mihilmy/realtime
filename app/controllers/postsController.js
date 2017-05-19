@@ -40,16 +40,19 @@ app.controller('postsController',
 	tmrw.setDate(tmrw.getDate() + 1);
 	tmrw.setSeconds(0,0);
 	
-	$scope.post = { start: date, end: tmrw}
-	$scope.isCollapsed = false;
+	$scope.post = { start: date, end: tmrw};
+	
+	var postId,imgCount;
 		 
 	$scope.create = function() {
 		if(!$scope.post.content) {
 			$rootScope.postsError = "Please add the post content";
 			return;
 		}
-		//Create the post id.
-		var postId = postsRef.push().key;
+		//Create the post id, if it has not been already created from the image upload.
+		if (!postId) {
+			postId = postsRef.push().key;
+		} 
 		//Add the content of the post in the database.
 		postsRef.child(postId).set({
 			id: postId,
@@ -64,37 +67,46 @@ app.controller('postsController',
 			content: $scope.post.content
 		});
 		
+		postId = undefined;
+		
 		$rootScope.postsError = "";
 		$location.path('/');
 	}
-	
-	
 	/*
-	@return
-	Uses the search tempelate to create a modal dialog to be used for users to search.
-	Nothing to be done by ng-route here.
-	A dependency called $uibModal was added in the function definition above.
-	*/
-	
-	$scope.openModal = function () {
+	@params
+		e - editor 
 		
-    $scope.modal = $uibModal.open({
-      templateUrl: 'views/posts/search.html',
-      controller: 'postsController',
-			backdrop: true,
-			scope: $scope
-    });
-	
-	}
-	
-	/*
-	@return 
-	Closes the modal. Throws a possibly unhandeled rejection.
+	This is a method that handles any uploads done by the trix editor in the new.html file.
+	It uses firebase's storage reference and sets then retrievs the url from the storage bucket.
+	Finally, setting the <img> tag's src attribute to that retreived URL.
 	*/
-	$scope.closeModal = function () {
-		$scope.modal.dismiss('dismiss');
-	}
+	$scope.trixAttachmentAdd = function(e) {
+		var attachment = e.attachment;
+		
+		if (!postId) {
+			postId = postsRef.push().key;
+			console.log(postId);
+			imgCount = 0;
+		} 
+		
+		if (attachment.file) {
+			let storageRef = firebase.storage().ref('posts/' + postId + '/' + imgCount);
 	
+			storageRef.put(attachment.file).then(function(snapshot) {
+				console.log(e);
+				
+				imgCount++;
+				return attachment.setAttributes({
+					url: snapshot.downloadURL,
+					href: snapshot.downloadURL,
+					src: snapshot.downloadURL,
+					
+				});
+				
+			});
+		}
+  }
+
 	/*
 	@return
 	Temporary function to filter out posts on the index page after using the 
@@ -116,54 +128,6 @@ app.controller('postsController',
 		console.log(postsArray);	
 		return postsArray;
 		
-	}
-	
-	$scope.search = function() {
-		if ($scope.modal) {
-			$scope.modal.close('search');
-		}
-		var postsArray = [];
-		//Define our search variables
-		var title = $scope.query.title;
-		var category = $scope.query.category;
-		var location = $scope.query.location;
-		var start = $scope.query.start;
-		var end = $scope.query.end;
-		
-		postsRef.on('value', function(data) {
-			data.forEach( function(data) {
-				var postObj = data.val();
-				var include = true;
-				//Title is defined but not equal to post.
-				if (title && postObj.title.toLowerCase() != title.toLowerCase()) {
-					include = false;
-				}
-				//Category is defined but not equal to post.
-				if (category && postObj.category != category) {
-					include = false;
-				}
-				//Location is defined but not equal to post.
-				if (location && postObj.location != location.formatted_address) {
-					include = false;
-				}
-				//Start date is defined but not equal to post.
-				if (start && postObj.start != start) {
-					include = false;
-				}
-				//End date is defined but not equal to post.
-				if (end && postObj.end != end) {
-					include = false;
-				}
-				//Include flag was not caught in any of the above cases which means that it should be added to postsArray
-				if (include) {
-					postsArray.push(postObj);
-				}
-				
-			});
-			
-		});
-		
-		console.log(postsArray);
 	}
 	
 	$scope.show = function() {
