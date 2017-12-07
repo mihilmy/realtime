@@ -53,6 +53,28 @@ app.controller('postsController',
 		if (!postId) {
 			postId = postsRef.push().key;
 		} 
+
+		let el = document.createElement('html');
+		el.innerHTML = $scope.post.content;
+
+		let links = el.getElementsByTagName('a');
+
+		for (i = 0; i < links.length; i++) {
+			let link = links[i];
+			let actual_url = link['href'];
+			let figure = link['children'][0];
+			if (figure) {
+				// figure will be undefined for a link, but will have the image tag of an actual image.
+				figure.innerHTML = "<img src=\"" + actual_url + "\">";				
+			}
+		}
+
+		content_img_fixed = el.getElementsByTagName("BODY")[0].innerHTML;
+
+		console.log(content_img_fixed);
+		console.log($scope.post.content);
+
+
 		//Add the content of the post in the database.
 		postsRef.child(postId).set({
 			id: postId,
@@ -64,7 +86,7 @@ app.controller('postsController',
 			start: $scope.post.start.toString(),
 			end: $scope.post.end.toString(),
 			createdAt: firebase.database.ServerValue.TIMESTAMP,
-			content: $scope.post.content
+			content: content_img_fixed
 		});
 		
 		postId = undefined;
