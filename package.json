@@ -21,9 +21,11 @@
   "homepage": "https://github.com/mihilmy/realtime#readme",
   "dependencies": {
     "angular": "^1.6.3",
+    "angular-bootstrap-datetimepicker": "^1.1.4",
     "angular-trix": "^1.0.2",
     "angular-ui-bootstrap": "^2.5.0",
     "dateformat": "^2.0.0",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "moment": "^2.20.1"
   }
 }

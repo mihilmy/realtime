@@ -1,4 +1,4 @@
-var app = angular.module("realtime", ['ngRoute','firebase','google.places', 'angularTrix', 'ngSanitize', 'ui.bootstrap']);
+var app = angular.module("realtime", ['ngRoute','firebase','google.places', 'angularTrix', 'ngSanitize', 'ui.bootstrap','ui.bootstrap.datetimepicker']);
 
 app.run(['$rootScope', '$location', function($rootScope, $location) {
 	$rootScope.$on('$routeChangeError', function(event,next,previous, error){
