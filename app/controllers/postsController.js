@@ -229,29 +229,38 @@ app.controller('postsController', ['$scope', '$rootScope', '$routeParams', '$loc
 		function startDateOnSetTime () {
 		  $scope.$broadcast('start-date-changed');
 		}
-		
+				
 		function endDateOnSetTime () {
 		  $scope.$broadcast('end-date-changed');
 		}
 		
-		function startDateBeforeRender ($dates) {
+		function startDateBeforeRender($dates) {
 		  if ($scope.post.dateRangeEnd) {
 			var activeDate = moment($scope.post.dateRangeEnd);
-		
+			var currentDate = new Date();
+
 			$dates.filter(function (date) {
-			  return date.localDateValue() >= activeDate.valueOf()
+				let dateLaterThenEndDate = date.localDateValue() >= activeDate.valueOf();
+				let dateLaterThenNow = date.localDateValue() <= currentDate.getTime();
+				return dateLaterThenEndDate || dateLaterThenNow;
 			}).forEach(function (date) {
 			  date.selectable = false;
 			})
 		  }
 		}
+
+
 		
 		function endDateBeforeRender ($view, $dates) {
 		  if ($scope.post.dateRangeStart) {
 			var activeDate = moment($scope.post.dateRangeStart).subtract(1, $view).add(1, 'minute');
 		
+			var currentDate = new Date();			
+
 			$dates.filter(function (date) {
-			  return date.localDateValue() <= activeDate.valueOf()
+			  let dateBeforeStartDate = date.localDateValue() <= activeDate.valueOf()
+			  let dateLaterThenNow = date.localDateValue() <= currentDate.getTime();
+			  return dateBeforeStartDate || dateLaterThenNow;
 			}).forEach(function (date) {
 			  date.selectable = false;
 			})
