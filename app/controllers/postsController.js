@@ -48,6 +48,7 @@ app.controller('postsController', ['$scope', '$rootScope', '$routeParams', '$loc
 		var postId, imgCount;
 
 		$scope.create = function () {
+
 			if (!$scope.post.content) {
 				$rootScope.postsError = "Please add the post content";
 				return;
@@ -80,10 +81,6 @@ app.controller('postsController', ['$scope', '$rootScope', '$routeParams', '$loc
 
 			content_img_fixed = el.getElementsByTagName("BODY")[0].innerHTML;
 
-			console.log(content_img_fixed);
-			console.log($scope.post.content);
-
-
 			//Add the content of the post in the database.
 			postsRef.child(postId).set({
 				id: postId,
@@ -92,8 +89,8 @@ app.controller('postsController', ['$scope', '$rootScope', '$routeParams', '$loc
 				summary: $scope.post.summary,
 				category: parseInt($scope.post.category),
 				location: $scope.post.location.formatted_address,
-				start: $scope.post.start.toString(),
-				end: $scope.post.end.toString(),
+				start: $scope.post.dateRangeStart.toString(),
+				end: $scope.post.dateRangeEnd.toString(),
 				createdAt: firebase.database.ServerValue.TIMESTAMP,
 				content: content_img_fixed
 			});
@@ -222,6 +219,45 @@ app.controller('postsController', ['$scope', '$rootScope', '$routeParams', '$loc
 			var fav = $firebaseObject(favRef);
 		}
 
+		// Datetime picker functions
+
+		$scope.endDateBeforeRender = endDateBeforeRender
+		$scope.endDateOnSetTime = endDateOnSetTime
+		$scope.startDateBeforeRender = startDateBeforeRender
+		$scope.startDateOnSetTime = startDateOnSetTime
+		
+		function startDateOnSetTime () {
+		  $scope.$broadcast('start-date-changed');
+		}
+		
+		function endDateOnSetTime () {
+		  $scope.$broadcast('end-date-changed');
+		}
+		
+		function startDateBeforeRender ($dates) {
+		  if ($scope.post.dateRangeEnd) {
+			var activeDate = moment($scope.post.dateRangeEnd);
+		
+			$dates.filter(function (date) {
+			  return date.localDateValue() >= activeDate.valueOf()
+			}).forEach(function (date) {
+			  date.selectable = false;
+			})
+		  }
+		}
+		
+		function endDateBeforeRender ($view, $dates) {
+		  if ($scope.post.dateRangeStart) {
+			var activeDate = moment($scope.post.dateRangeStart).subtract(1, $view).add(1, 'minute');
+		
+			$dates.filter(function (date) {
+			  return date.localDateValue() <= activeDate.valueOf()
+			}).forEach(function (date) {
+			  date.selectable = false;
+			})
+		  }
+		}
 
 	}
+
 ]);
